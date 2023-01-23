@@ -38,6 +38,7 @@ class MyAppState extends ChangeNotifier {
     if(!opacityList.contains(1.0)){
       stopwatch.stop();
       print(stopwatch.elapsedMilliseconds/1000.0);
+      Navigator.pushNamed(context, '/score');
     };
     notifyListeners();
   }
@@ -49,6 +50,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
@@ -85,5 +88,25 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
     );
+  }
+}
+
+class Score extends StatelessWidget{
+  const Score({super.key});
+  @override
+  Widget build(BuildContext context){
+    var appState = context.watch<MyAppState>();
+    return Scaffold(
+      body: Column(
+        children: [
+          Text('Your time was: '
+          '${appState.stopwatch.elapsedMilliseconds / 1000.0}'
+          ),
+          ElevatedButton(onPressed: (){
+            Navigator.pop(context);
+          },
+          child: Text('new game'))
+        ],
+      ),);
   }
 }
